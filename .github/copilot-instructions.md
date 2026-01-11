@@ -6,7 +6,7 @@ and checks the agent should perform before making code changes.
 
 # Copilot / AI Agent Instructions — simple-task-app
 
-- **Repo snapshot:** minimal repository — only a `.gitignore` file present.
+- **Repo snapshot:** basic Node.js project with `package.json`, `index.js`, `README.md`, `.gitignore`, and this instructions file.
 
 - **Primary goal:** make small, well-scoped changes. If the repo lacks build
   or test files, prefer non-destructive edits (README, small feature files,
@@ -37,9 +37,10 @@ and checks the agent should perform before making code changes.
   following existing project patterns.
 
 ## Examples from this repository (current state)
-- Found: `.gitignore` at repository root. No `README.md`, `package.json`, or `src/`.
-  -> Before implementing features, create or update `README.md` describing how to
-     run and test locally.
+- Found: `package.json`, `index.js`, `README.md`, and `.gitignore` at repository root.
+  - Basic Node.js task management app structure in place
+  - Run with `node index.js` as documented in README.md
+  - No `src/` directory yet - flat structure for simplicity
 
 ## Merge strategy and human handoff
 - If you cannot run tests because the project lacks a manifest, open a draft PR
