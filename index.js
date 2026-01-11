@@ -14,7 +14,10 @@ server.listen(PORT, () => {
 });
 
 // Graceful shutdown
-process.on('SIGINT', () => {
-  console.log('Shutting down...');
+const gracefulShutdown = (signal) => {
+  console.log(`Shutting down (${signal})...`);
   server.close(() => process.exit(0));
+};
+['SIGINT', 'SIGTERM'].forEach((signal) => {
+  process.on(signal, () => gracefulShutdown(signal));
 });
