@@ -37,7 +37,7 @@ and checks the agent should perform before making code changes.
   following existing project patterns.
 
 ## Examples from this repository (current state)
-- Found: `package.json`, `package-lock.json`, `index.js`, `README.md`, and `.gitignore` at repository root.
+- Found: `package.json`, `package-lock.json`, `index.js`, `README.md`, `.gitignore`, and this instructions file at repository root.
   - Basic Node.js task management app structure in place
   - Run with `node index.js` as documented in README.md
   - No `src/` directory yet - flat structure for simplicity
