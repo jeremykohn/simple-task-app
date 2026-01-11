@@ -4,7 +4,7 @@ This repository is a minimal starter for the Simple Task App. It currently
 contains only basic scaffolding so contributors and AI agents can make
 incremental, discoverable changes.
 
-Run / test
+## Run / test
 
 - Install dependencies (none required yet):
 
@@ -27,7 +27,7 @@ node index.js
 npm test
 ```
 
-Notes for contributors and AI agents
+## Notes for contributors and AI agents
 
 - The repo is intentionally minimal. If you add frameworks or packages,
   update `package.json` and this README with the install/run steps.
