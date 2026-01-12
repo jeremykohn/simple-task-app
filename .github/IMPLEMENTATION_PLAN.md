@@ -319,7 +319,7 @@ npm run dev          # Start dev server (http://localhost:3000)
 - [ ] Sync across tabs (BroadcastChannel API)
 - [ ] Dark mode toggle
 - [ ] Drag-and-drop reordering
-- [ ] Cloud sync (Firebase, Supabase)
+- [ ] Cloud sync (Dropbox, iCloud, Google Drive)
 - [ ] PWA / offline mode
 
 ---
