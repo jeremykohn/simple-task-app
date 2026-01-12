@@ -240,7 +240,7 @@ app.vue
 ## 6. LocalStorage Persistence Strategy
 
 ### Storage Key
-- **Key**: `"nuxt-tasks-v1"` (versioned to allow migrations)
+- **Key**: `"nuxt-tasks-v0.1.0"` (versioned to allow migrations)
 - **Format**: JSON array of Task objects
 
 ### Persistence Flow
@@ -249,7 +249,7 @@ app.vue
    ↓
 2. Check if browser (typeof window !== 'undefined')
    ↓
-3. Load from localStorage (key: "nuxt-tasks-v1")
+3. Load from localStorage (key: "nuxt-tasks-v0.1.0")
    ↓
 4. Validate JSON + type-check Task objects
    ↓
