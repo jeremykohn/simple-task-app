@@ -324,36 +324,244 @@ npm run dev          # Start dev server (http://localhost:3000)
 
 ---
 
-## 10. Implementation Roadmap
+## 10. Implementation Roadmap (Test-Driven Development)
 
-### Phase 1: Setup
+### TDD Workflow
+For each feature, follow the **Red-Green-Refactor** cycle:
+1. **Red** — Write a failing test that defines the expected behavior
+2. **Green** — Write minimal code to make the test pass
+3. **Refactor** — Clean up code while keeping tests passing
+
+### Phase 1: Project Setup & Testing Infrastructure
 1. Create Nuxt 4 project with TypeScript
-2. Install & configure Tailwind CSS
-3. Create `shared/types/task.ts` interface
+2. Install & configure testing frameworks:
+   - **Vitest** (unit testing, fast, Vite-native)
+   - **@vue/test-utils** (Vue component testing)
+   - **@nuxt/test-utils** (Nuxt-specific test utilities)
+   - **happy-dom** or **jsdom** (DOM environment for tests)
+3. Install & configure Tailwind CSS
 4. Set up folder structure (app/, server/, shared/, public/, modules/)
+5. Configure `vitest.config.ts` with auto-imports and aliases
+6. Create `shared/types/task.ts` interface (no tests needed for types)
 
-### Phase 2: Core Logic
-1. Implement `app/composables/useTasks.ts` (state + actions + localStorage)
-2. Test hydration and persistence
+**Deliverable:** Project scaffold with passing test runner (`npm run test`)
 
-### Phase 3: Components
-1. Build `TaskInput.vue`
-2. Build `TaskItem.vue`
-3. Build `TaskList.vue`
-4. Build `EmptyState.vue`
-5. Wire everything into `app.vue`
+---
 
-### Phase 4: Styling & Polish
-1. Apply Tailwind classes
-2. Test responsive design
-3. Refine accessibility (focus states, ARIA labels)
-4. Test on mobile
+### Phase 2: Core Logic (TDD for `useTasks` Composable)
 
-### Phase 5: Verification & Deployment
-1. Manual testing checklist
-2. Build for production (`npm run build`)
-3. Deploy to Vercel (`vercel deploy`)
-4. Smoke test in production
+#### 2.1 Write Tests First (`app/composables/useTasks.test.ts`)
+Write tests for:
+- ✅ **State initialization** — Tasks start as empty array
+- ✅ **addTask()** — Adds task with unique ID, timestamp, completed=false
+- ✅ **deleteTask()** — Removes task by ID
+- ✅ **toggleTask()** — Flips completed status
+- ✅ **saveTasks()** — Persists to localStorage (mock localStorage)
+- ✅ **loadTasks()** — Hydrates from localStorage
+- ✅ **isEmpty computed** — Returns true when tasks.length === 0
+- ✅ **completedCount computed** — Counts completed tasks
+
+**Run tests:** All should fail initially (Red phase)
+
+#### 2.2 Implement `app/composables/useTasks.ts`
+Write minimal implementation to pass tests:
+- Use `useState()` for reactive state
+- Implement each action (add, delete, toggle)
+- Add localStorage persistence (with try-catch)
+- Add computed properties
+
+**Run tests:** All should pass (Green phase)
+
+#### 2.3 Refactor
+- Extract ID generation logic
+- Add JSDoc comments
+- Optimize localStorage operations (debounce if needed)
+
+**Run tests:** All should still pass
+
+**Deliverable:** Fully tested composable with 100% coverage
+
+---
+
+### Phase 3: Components (TDD for Vue Components)
+
+#### 3.1 TaskItem Component (Red-Green-Refactor)
+
+**Tests First** (`app/components/TaskItem.test.ts`):
+- ✅ Renders task title
+- ✅ Checkbox reflects completed state
+- ✅ Applies strikethrough when completed
+- ✅ Emits toggle event on checkbox click
+- ✅ Emits delete event on delete button click
+- ✅ Has accessible labels (aria-label, role)
+
+**Implement** (`app/components/TaskItem.vue`):
+- Build basic template with checkbox, text, delete button
+- Wire up events
+- Add Tailwind classes for strikethrough
+
+**Refactor:**
+- Extract reusable button styles
+- Add keyboard navigation support
+
+---
+
+#### 3.2 TaskInput Component (Red-Green-Refactor)
+
+**Tests First** (`app/components/TaskInput.test.ts`):
+- ✅ Renders input field and button
+- ✅ Button disabled when input empty/whitespace
+- ✅ Emits add event with trimmed text on button click
+- ✅ Emits add event on Enter key
+- ✅ Clears input after adding task
+- ✅ Trims whitespace from input
+
+**Implement** (`app/components/TaskInput.vue`):
+- Build input + button template
+- Add validation logic (trim, disable button)
+- Wire up keyboard and click events
+
+**Refactor:**
+- Extract validation to computed property
+- Add focus management (focus input after add)
+
+---
+
+#### 3.3 TaskList Component (Red-Green-Refactor)
+
+**Tests First** (`app/components/TaskList.test.ts`):
+- ✅ Renders TaskItem for each task
+- ✅ Shows EmptyState when tasks array is empty
+- ✅ Passes correct props to TaskItem
+- ✅ Uses task.id as key for v-for
+- ✅ Handles toggle/delete events from TaskItem
+
+**Implement** (`app/components/TaskList.vue`):
+- Build wrapper with v-for over tasks
+- Conditionally render EmptyState
+- Wire up event delegation
+
+**Refactor:**
+- Add transition animations (optional)
+- Sort tasks (completed at bottom)
+
+---
+
+#### 3.4 EmptyState Component (Red-Green-Refactor)
+
+**Tests First** (`app/components/EmptyState.test.ts`):
+- ✅ Renders friendly message
+- ✅ Has accessible semantic HTML (role, aria-label)
+- ✅ Matches design (centered, gray text)
+
+**Implement** (`app/components/EmptyState.vue`):
+- Simple template with message
+- Tailwind classes for styling
+
+**Refactor:**
+- Add icon or emoji (optional)
+
+---
+
+#### 3.5 Integration: Wire into `app.vue`
+
+**Integration Tests** (`app/app.test.ts` or E2E):
+- ✅ Full user flow: add task → appears in list
+- ✅ Full user flow: toggle task → strikethrough applied
+- ✅ Full user flow: delete task → removed from list
+- ✅ Hydration: tasks persist after page refresh (mock localStorage)
+
+**Implement** (`app/app.vue`):
+- Use `useTasks()` composable
+- Call `initializeTasks()` on mounted
+- Render TaskInput, TaskList with proper data flow
+
+**Refactor:**
+- Extract layout to `app/layouts/default.vue` (if needed)
+- Add header/footer
+
+---
+
+### Phase 4: Styling & Polish (Visual QA)
+1. Apply Tailwind classes to all components
+2. Test responsive design (mobile, tablet, desktop)
+3. Add transitions/animations (task add/remove)
+4. Dark mode support (optional)
+
+**Testing:** Visual regression tests or manual QA checklist
+
+---
+
+### Phase 5: Accessibility (A11y Testing)
+1. Run automated a11y tests:
+   - **@axe-core/vue** or **jest-axe**
+   - Test for WCAG 2.1 AA compliance
+2. Manual keyboard navigation testing:
+   - Tab through all interactive elements
+   - Enter/Space to activate buttons/checkboxes
+   - Escape to cancel (if applicable)
+3. Screen reader testing (VoiceOver, NVDA)
+4. Test on mobile devices (touch targets ≥44px)
+
+**Fix issues:** Update components based on test results
+
+---
+
+### Phase 6: End-to-End Testing (Optional but Recommended)
+1. Set up **Playwright** or **Cypress**
+2. Write E2E tests:
+   - ✅ User can add, toggle, and delete tasks
+   - ✅ Tasks persist across page reloads
+   - ✅ Empty state appears when no tasks
+3. Run E2E tests in CI pipeline
+
+---
+
+### Phase 7: Verification & Deployment
+1. **Run full test suite:** `npm run test` (all tests pass)
+2. **Run E2E tests:** `npm run test:e2e` (if implemented)
+3. **Check coverage:** `npm run test:coverage` (aim for >80%)
+4. **Build for production:** `npm run build` (no errors)
+5. **Deploy to Vercel:** `vercel deploy`
+6. **Smoke test in production:**
+   - Add a task
+   - Toggle completion
+   - Delete task
+   - Refresh page (verify persistence)
+
+---
+
+### Testing File Structure
+```
+app/
+├── composables/
+│   ├── useTasks.ts
+│   └── useTasks.test.ts           # Unit tests for composable
+├── components/
+│   ├── TaskInput.vue
+│   ├── TaskInput.test.ts          # Component tests
+│   ├── TaskItem.vue
+│   ├── TaskItem.test.ts
+│   ├── TaskList.vue
+│   ├── TaskList.test.ts
+│   ├── EmptyState.vue
+│   └── EmptyState.test.ts
+└── app.test.ts                     # Integration tests
+
+tests/
+└── e2e/
+    └── task-management.spec.ts     # End-to-end tests (Playwright/Cypress)
+```
+
+---
+
+### TDD Benefits for This Project
+- ✅ **Confidence:** All features have automated tests
+- ✅ **Regression prevention:** Tests catch breaking changes
+- ✅ **Documentation:** Tests serve as living documentation
+- ✅ **Better design:** TDD encourages modular, testable code
+- ✅ **Faster debugging:** Failing tests pinpoint issues quickly
+- ✅ **Refactoring safety:** Change code without fear
 
 ---
 
@@ -375,4 +583,3 @@ npm run dev          # Start dev server (http://localhost:3000)
 This plan establishes a **simple, performant, and maintainable** Nuxt 4 task application. The composable pattern centralizes state logic, Tailwind ensures consistent styling, and LocalStorage provides persistence without backend complexity. The component structure is modular and easy to extend with future features.
 
 Ready to implement when you give the signal!
-
