@@ -520,7 +520,7 @@ Write minimal implementation to pass tests:
 ### Phase 7: Verification & Deployment
 1. **Run full test suite:** `npm run test` (all tests pass)
 2. **Run E2E tests:** `npm run test:e2e` (if implemented)
-3. **Check coverage:** `npm run test:coverage` (aim for >80%)
+3. **Check coverage:** `npm run test:coverage` (aim for 100%)
 4. **Build for production:** `npm run build` (no errors)
 5. **Deploy to Vercel:** `vercel deploy`
 6. **Smoke test in production:**
