@@ -148,7 +148,7 @@ export function useTasks() {
 
 #### Persistence Logic
 - After every mutation (add/delete/toggle), call `saveTasks()`
-- Save to `localStorage.setItem('nuxt-tasks', JSON.stringify(tasks.value))`
+- Save to `localStorage.setItem('nuxt-tasks-v0.1.0', JSON.stringify(tasks.value))`
 - On load, safely parse and validate before restoring
 
 #### Error Handling
