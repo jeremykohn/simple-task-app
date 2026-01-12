@@ -507,7 +507,7 @@ Write minimal implementation to pass tests:
 
 ---
 
-### Phase 6: End-to-End Testing (Optional but Recommended)
+### Phase 6: End-to-End Testing
 1. Set up **Playwright** or **Cypress**
 2. Write E2E tests:
    - ✅ User can add, toggle, and delete tasks
