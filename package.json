@@ -2,8 +2,8 @@
   "name": "simple-task-app",
   "version": "0.1.0",
   "private": true,
-  "description": "Simple task app",
-  "main": "index.js",
+  "type": "module",
+  "description": "Simple task management application built with Nuxt 4",
   "scripts": {
     "start": "node index.js",
     "test": "echo \"No tests specified\" && exit 0"
