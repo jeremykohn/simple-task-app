@@ -1,6 +1,8 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 import { useTasks } from './useTasks'
 
+declare const global: { localStorage: Storage }
+
 describe('useTasks composable', () => {
   beforeEach(() => {
     // Mock localStorage
