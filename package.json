@@ -5,7 +5,10 @@
   "type": "module",
   "description": "Simple task management application built with Nuxt 4",
   "scripts": {
-    "start": "node index.js",
-    "test": "echo \"No tests specified\" && exit 0"
+    "dev": "nuxt dev",
+    "build": "nuxt build",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "test": "vitest",
+    "test:coverage": "vitest --coverage"
   }
-}
