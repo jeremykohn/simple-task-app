@@ -13,7 +13,7 @@
     "allowJs": true,
     "baseUrl": ".",
     "paths": {
-      "~/*": ["./*"]
+      "~/*": ["./app/*"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx", "**/*.vue", ".nuxt/nuxt.d.ts"]

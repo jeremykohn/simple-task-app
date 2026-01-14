@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import { useTasks } from '~/app/composables/useTasks'
+import { useTasks } from '~/composables/useTasks'
 
 const { tasks, isEmpty, toggleTask, deleteTask } = useTasks()
 </script>

@@ -21,7 +21,7 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { useTasks } from '~/app/composables/useTasks'
+import { useTasks } from '~/composables/useTasks'
 
 const inputValue = ref('')
 const { addTask } = useTasks()
