@@ -5,6 +5,10 @@ declare const global: { localStorage: Storage }
 
 describe('useTasks composable', () => {
   beforeEach(() => {
+    // Reset shared state before each test
+    const { resetState } = useTasks()
+    resetState()
+
     // Mock localStorage
     const store: Record<string, string> = {}
     

@@ -3,10 +3,11 @@ import type { Task } from '~/shared/types/task'
 
 const STORAGE_KEY = 'nuxt-tasks-v0.1.0'
 
+// Shared state - defined outside the function so all components share the same state
+const tasks = ref<Task[]>([])
+const isHydrated = ref<boolean>(false)
+
 export function useTasks() {
-  // State
-  const tasks = ref<Task[]>([])
-  const isHydrated = ref<boolean>(false)
 
   // Computed properties
   const isEmpty = computed(() => tasks.value.length === 0)
@@ -97,6 +98,12 @@ export function useTasks() {
     isHydrated.value = true
   }
 
+  // Reset state (for testing)
+  const resetState = (): void => {
+    tasks.value = []
+    isHydrated.value = false
+  }
+
   return {
     tasks: readonly(tasks),
     isHydrated: readonly(isHydrated),
@@ -108,6 +115,7 @@ export function useTasks() {
     toggleTask,
     saveTasks,
     loadTasks,
-    initializeTasks
+    initializeTasks,
+    resetState
   }
 }
