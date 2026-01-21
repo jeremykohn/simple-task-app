@@ -45,8 +45,9 @@ describe('useTasks composable', () => {
     addTask('Test task')
     
     expect(tasks.value).toHaveLength(1)
-    expect(tasks.value[0].title).toBe('Test task')
-    expect(tasks.value[0].completed).toBe(false)
+    // `noUncheckedIndexedAccess` makes array indexing possibly-undefined in TS
+    expect(tasks.value[0]!.title).toBe('Test task')
+    expect(tasks.value[0]!.completed).toBe(false)
   })
 
   it('does not add empty or whitespace-only tasks', () => {
@@ -62,25 +63,25 @@ describe('useTasks composable', () => {
     addTask('Task 1')
     addTask('Task 2')
     
-    const firstTaskId = tasks.value[0].id
+    const firstTaskId = tasks.value[0]!.id
     deleteTask(firstTaskId)
     
     expect(tasks.value).toHaveLength(1)
-    expect(tasks.value[0].title).toBe('Task 2')
+    expect(tasks.value[0]!.title).toBe('Task 2')
   })
 
   it('toggles task completion status', () => {
     const { tasks, addTask, toggleTask } = useTasks()
     addTask('Test task')
     
-    const taskId = tasks.value[0].id
-    expect(tasks.value[0].completed).toBe(false)
+    const taskId = tasks.value[0]!.id
+    expect(tasks.value[0]!.completed).toBe(false)
     
     toggleTask(taskId)
-    expect(tasks.value[0].completed).toBe(true)
+    expect(tasks.value[0]!.completed).toBe(true)
     
     toggleTask(taskId)
-    expect(tasks.value[0].completed).toBe(false)
+    expect(tasks.value[0]!.completed).toBe(false)
   })
 
   it('counts completed tasks correctly', () => {
@@ -91,10 +92,10 @@ describe('useTasks composable', () => {
     
     expect(completedCount.value).toBe(0)
     
-    toggleTask(tasks.value[0].id)
+    toggleTask(tasks.value[0]!.id)
     expect(completedCount.value).toBe(1)
     
-    toggleTask(tasks.value[1].id)
+    toggleTask(tasks.value[1]!.id)
     expect(completedCount.value).toBe(2)
   })
 
@@ -125,7 +126,7 @@ describe('useTasks composable', () => {
     loadTasks()
     
     expect(tasks.value).toHaveLength(1)
-    expect(tasks.value[0].title).toBe('Loaded task')
+    expect(tasks.value[0]!.title).toBe('Loaded task')
   })
 
   it('handles invalid localStorage data gracefully', () => {

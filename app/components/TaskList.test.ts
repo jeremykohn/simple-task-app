@@ -51,8 +51,9 @@ describe('TaskList.vue', () => {
     
     const taskItems = wrapper.findAllComponents(TaskItem)
     expect(taskItems).toHaveLength(3)
-    expect(taskItems[0].props('task').title).toBe('Task 1')
-    expect(taskItems[1].props('task').title).toBe('Task 2')
-    expect(taskItems[2].props('task').title).toBe('Task 3')
+    // `noUncheckedIndexedAccess` makes array indexing possibly-undefined in TS
+    expect(taskItems[0]!.props('task').title).toBe('Task 1')
+    expect(taskItems[1]!.props('task').title).toBe('Task 2')
+    expect(taskItems[2]!.props('task').title).toBe('Task 3')
   })
 })
